@@ -1,0 +1,89 @@
+My controlHost network settings:
+#From the home directory, cd into /etc/netplan and ls to see the contents of the directory
+#edit the .yaml file using sudo vim 01-Network-Manager-all.yaml
+
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    ens33:
+      dhcp4: true
+      addresses: [192.168.100.10/24]
+
+#save and set permission for the .yaml file using:
+
+sudo chmod 600 01-network-manager-all.yaml
+sudo netplan try 
+sudo netplan apply
+
+
+#then <ip a> to see your new static ip address apply.
+
+#sudo vim /etc/hosts in your home directory to edit the DNS settings by adding the following lines:
+
+192.168.100.10  control
+192.168.100.20  node1
+192.168.100.30  node2
+
+
+Repeat the same process for node1 and node2 with dhcp4 ip addresses set to 192.168.100.20/24 & 192.168.100.30/24 respectively. Also edit the DNS settings for node1 and node1 by adding the following lines to /etc/hosts file:
+
+
+====================For node1==================================
+cd /etc/netplan
+sudo vim 01-Network-Manager-all.yaml
+
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    ens33:
+      dhcp4: true
+      addresses: [192.168.100.20/24]
+
+#Save and exit
+
+sudo chmod 600 01-network-manager-all.yaml
+sudo netplan try 
+sudo netplan apply
+
+#then <ip a> to see your new static ip address apply.
+
+cd vim /etc/hosts, then add:
+192.168.100.10  control
+192.168.100.20  node1
+192.168.100.30  node2
+
+tests the connectivity by pinging the remote nodes:
+ping 192.168.100.20 or ping node1
+ping 192.168.100.30 or ping node2
+
+==========================for node2===============================
+
+cd /etc/netplan
+sudo vim 01-Network-Manager-all.yaml
+
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    ens33:
+      dhcp4: true
+      addresses: [192.168.100.30/24]
+
+#Save and exit
+
+sudo chmod 600 01-network-manager-all.yaml
+sudo netplan try 
+sudo netplan apply
+
+#then <ip a> to see your new static ip address apply.
+
+cd vim /etc/hosts, then add:
+192.168.100.10  control
+192.168.100.20  node1
+192.168.100.30  node2
+
+tests the connectivity by pinging the remote nodes:
+ping 192.168.100.20 or ping node1
+ping 192.168.100.30 or ping node2
