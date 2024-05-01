@@ -1,0 +1,11 @@
+---
+
+
+- hosts: all
+  become: true
+  tasks: 
+    - name: update softwares
+      apt:
+        upgrade: yes
+        state: latest
+
