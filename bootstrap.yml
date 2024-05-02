@@ -1,5 +1,6 @@
 ---
 
+<<<<<<< HEAD
 
 - hosts: all
   become: true
@@ -18,3 +19,9 @@
           - adm
         state: present    
 
+=======
+- hosts: all
+  become: true
+  roles:
+    - bootstrap_config
+>>>>>>> 7ba9e863319b3a88abd1c3514844e759e0920af4

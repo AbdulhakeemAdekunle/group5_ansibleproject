@@ -1,0 +1,75 @@
+---
+
+- name: Update system packages across all systems(Ubuntu)
+  tags: updateSystem
+  apt:
+    update_cache: yes
+  changed_when: false #This will enable the task to run under the hood without showing changes on the playbook tasks
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: Update system packages across all systems(Oracle Linux)
+  tags: updateSystem
+  dnf:
+    update_cache: yes
+  changed_when: false
+  when: ansible_distribution == "OracleLinux"
+
+- name: Install apache server(Ubuntu)
+  tags: apache,apache2
+  apt:
+    name:
+      - apache2
+      - libapache2-mod-php
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+- name: start apache server(Ubuntu)
+  tags: start-apache
+  service:
+     name: apache2
+     state: started
+     enabled: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install apache server(OracleLinux)
+  tags: apache,apache2
+  dnf:
+    name:
+      - httpd
+      - php
+    state: latest
+  when: ansible_distribution == "OracleLinux"
+
+- name: start apache server(OracleLinux)
+  tags: start-apache
+  service:
+     name: httpd
+     state: started
+     enabled: yes
+  when: ansible_distribution == "OracleLinux"
+
+- name: Update serverAdmin in the apache config file
+  tags: update-admin
+  lineinfile:
+    dest: /etc/apache2/apache2.conf
+    regexp: '^ServerAdmin'
+    line: 'martin.mato@ingrydacademy.com'
+    state: present
+
+- name: Enable UFW on all systems
+  tags: enable-ufw
+  ufw:
+    state: enabled
+
+- name: Allow SSH, HTTP and HTTPS on all systems
+  tags: allow-ssh,allow-http,allow-https
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - 22
+    - 80
+    - 443
+
