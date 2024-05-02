@@ -2,10 +2,31 @@
 
 # The task below update the software of the system
 
-- name: Code to fully update each node software(Ubuntu)
+- name: Update each node software(Ubuntu)
   tags: updateSoftware
   shell: |
     yes | sudo apt-get update
     yes | sudo apt-get upgrade
   changed_when: false #This will enable the task to run under the hood without showing changes on the playbook tasks
   when: ansible_distribution == "Ubuntu"
+
+# The task below creates a user and add the user to member groups
+
+- name: Create a primary group
+  tags: primary-group
+  command: groupadd admin1
+
+
+- name: Creating a super user across all systems
+  tags: add-user
+  user:
+    name: "{{ username }}"
+    group: admin1
+    groups:
+      - adm
+      - root
+      - sudo
+    create_home: yes
+    state: present
+
+
