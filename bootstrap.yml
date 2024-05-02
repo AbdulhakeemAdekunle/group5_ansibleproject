@@ -8,4 +8,13 @@
       apt:
         upgrade: yes
         state: latest
+    
+    - name: creating a user called admin 
+      user:
+        name: admin
+        groups: 
+          - root
+          - sudo
+          - adm
+        state: present    
 
