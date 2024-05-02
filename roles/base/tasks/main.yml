@@ -14,3 +14,37 @@
     update_cache: yes
   changed_when: false
   when: ansible_distribution == "OracleLinux"
+
+- name: Install apache server(Ubuntu)
+  tags: apache,apache2
+  apt:
+    name:
+      - apache2
+      - libapache2-mod-php
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+- name: start apache server(Ubuntu)
+  tags: start-apache
+  service:
+     name: apache2
+     state: started
+     enabled: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install apache server(OracleLinux)
+  tags: apache,apache2
+  dnf:
+    name:
+      - httpd
+      - php
+    state: latest
+  when: ansible_distribution == "OracleLinux"
+
+- name: start apache server(OracleLinux)
+  tags: start-apache
+  service:
+     name: httpd
+     state: started
+     enabled: yes
+  when: ansible_distribution == "OracleLinux"
