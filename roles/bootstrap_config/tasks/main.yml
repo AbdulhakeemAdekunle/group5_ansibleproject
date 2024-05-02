@@ -40,3 +40,10 @@
     line: "{{ username }} ALL=(ALL) NOPASSWD:ALL"
     state: present
 
+# The task below copy ssh_keys to remote system
+
+- name: Add ssh-key for the super user across all systems
+  tags: copy-ssh-keys
+  authorized_key:
+    user: "{{ username }}"
+    key: "{{ ssh_pub_key }}"
