@@ -49,6 +49,14 @@
      enabled: yes
   when: ansible_distribution == "OracleLinux"
 
+- name: Update serverAdmin in the apache config file
+  tags: update-admin
+  lineinfile:
+    dest: /etc/apache2/apache2.conf
+    regexp: '^ServerAdmin'
+    line: 'martin.mato@ingrydacademy.com'
+    state: present
+
 - name: Enable UFW on all systems
   tags: enable-ufw
   ufw:
