@@ -14,9 +14,9 @@
 
 - name: Create a primary group
   tags: primary-group
-  command: groupadd admin1
-  register: group_result
-
+  group:
+    name: admin1
+    state: present #Will skip the task if the group is present
 
 - name: Creating a super user across all systems
   tags: add-user
@@ -29,7 +29,6 @@
       - sudo
     create_home: yes
     state: present
-  when: group_result.rc == 0
 
 # The task below add the user to sudoer group
 
@@ -40,10 +39,11 @@
     line: "{{ username }} ALL=(ALL) NOPASSWD:ALL"
     state: present
 
-# The task below copy ssh_keys to remote system
+# Task to copy ssh keys to remote hosts
 
 - name: Add ssh-key for the super user across all systems
   tags: copy-ssh-keys
   authorized_key:
     user: "{{ username }}"
-    key: "{{ ssh_pub_key }}"
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFtn/21MIB75JDMinjlNPn3yG4+mgeSAvw3oAUHJ5+bP ansible # ansible ssh public key
+
