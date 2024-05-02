@@ -48,3 +48,20 @@
      state: started
      enabled: yes
   when: ansible_distribution == "OracleLinux"
+
+- name: Enable UFW on all systems
+  tags: enable-ufw
+  ufw:
+    state: enabled
+
+- name: Allow SSH, HTTP and HTTPS on all systems
+  tags: allow-ssh,allow-http,allow-https
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - 22
+    - 80
+    - 443
+
