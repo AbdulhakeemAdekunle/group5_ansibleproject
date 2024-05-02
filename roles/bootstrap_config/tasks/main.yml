@@ -1,0 +1,11 @@
+---
+
+# The task below update the software of the system
+
+- name: Code to fully update each node software(Ubuntu)
+  tags: updateSoftware
+  shell: |
+    yes | sudo apt-get update
+    yes | sudo apt-get upgrade
+  changed_when: false #This will enable the task to run under the hood without showing changes on the playbook tasks
+  when: ansible_distribution == "Ubuntu"
