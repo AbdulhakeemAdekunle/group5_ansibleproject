@@ -1,7 +1,5 @@
 ---
 
-<<<<<<< HEAD
-
 - hosts: all
   become: true
   tasks: 
@@ -19,26 +17,12 @@
           - adm
         state: present    
 
-=======
-- hosts: all
-  become: true
-<<<<<<< HEAD
-  tasks:
-    - name: update softwares
-      apt:
-        upgrade: yes
-        state: latest 
-    - name: creating a user called admin
-      user:
-        name: admin
-        groups:
-          - root
-          - sudo
-          - adm
-        state: present
+    - name: Making admin1 a sudoer
+      copy:
+        src: sudoer_admin1
+        dest: /etc/sudoers.d/sudoer_admin1
+        owner: root
+        group: root
+        mode: 0440 
 
-=======
-  roles:
-    - bootstrap_config
->>>>>>> 7ba9e863319b3a88abd1c3514844e759e0920af4
->>>>>>> dc92b36a4b70ee7e0e329a863ae771daa2143010
+
