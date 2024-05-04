@@ -24,7 +24,7 @@
           - root
           - sudo
           - adm
-        state: present    
+        state: present  
 
     - name: Making admin1 a sudoer
       copy:
