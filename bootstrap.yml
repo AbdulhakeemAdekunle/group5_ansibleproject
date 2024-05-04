@@ -6,7 +6,7 @@
     - name: update softwares
       apt:
         upgrade: yes
-        state: latest
+        state: present
           
     - name: creating user called admin
       user: 
@@ -16,5 +16,13 @@
           - sudo
           - adm
         state: present
+    
+    - name: Making admin1 sudoer
+      copy:
+        src: sudoer_admin1
+        dest: /etc/sudoers.d/sudoer_admin1
+        owner: root
+        group: root
+        mode: 0440
 
              
