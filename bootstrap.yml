@@ -15,7 +15,7 @@
           - root
           - sudo
           - adm
-        state: present    
+        state: present  
 
     - name: Making admin1 a sudoer
       copy:
@@ -23,6 +23,5 @@
         dest: /etc/sudoers.d/sudoer_admin1
         owner: root
         group: root
-        mode: 0440 
-
+        mode: 0440
 
