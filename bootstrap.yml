@@ -6,11 +6,20 @@
     - name: update softwares
       apt:
         upgrade: yes
-        state: latest
+        update_cache: yes
+        state: present
+      when: ansible_distribution == "Ubuntu"
+
+    - name: update software (oracle linux)
+      dnf: 
+        update_only: yes
+        update_cache: yes
+        state: present
+      when: ansible_distribution == "oraclelinux"    
     
-    - name: creating user called admin 
+    - name: creating user called admin1 
       user:
-        name: admin
+        name: admin1
         groups: 
           - root
           - sudo
@@ -24,5 +33,14 @@
         owner: root
         group: root
         mode: 0440 
+
+    - name: Add ssh-key for user admin1 
+      authorized_key:
+        user: admin1
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/meXDPvzoqRpOQFLR70UvxSUIsxyYG5I4p9o4LMEGx ansible"
+
+
+
+
 
 
